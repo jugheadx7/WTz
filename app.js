@@ -299,8 +299,8 @@ function chartConfig(data){
   const datasets = [{
     label: 'Weight',
     data: values,
-    borderColor: '#2F6F5E',
-    backgroundColor: 'rgba(47,111,94,0.08)',
+    borderColor: '#4FA98C',
+    backgroundColor: 'rgba(79,169,140,0.12)',
     borderWidth: 2.5,
     pointRadius: 2,
     tension: 0.3,
@@ -311,7 +311,7 @@ function chartConfig(data){
     datasets.push({
       label: 'Goal',
       data: labels.map(()=>goalVal),
-      borderColor: '#C97B4A',
+      borderColor: '#E0975E',
       borderDash: [5,5],
       borderWidth: 1.5,
       pointRadius: 0,
@@ -323,10 +323,11 @@ function chartConfig(data){
     data: { labels, datasets },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: { legend: { display:false } },
       scales: {
-        x: { grid: { display:false }, ticks: { font: { size: 11 }, maxTicksLimit: 8 } },
-        y: { grid: { color:'#E4E1D8' }, ticks: { font: { size: 11 } } }
+        x: { grid: { display:false }, ticks: { color:'#A7B0AB', font: { size: 11 }, maxTicksLimit: 8 } },
+        y: { grid: { color:'#333B3D' }, ticks: { color:'#A7B0AB', font: { size: 11 } } }
       }
     }
   };
@@ -414,6 +415,58 @@ function renderGoalSummary(){
       : `You've reached your goal weight. Nice work.`;
 }
 
+// ---------- Motivation quotes ----------
+const QUOTES = [
+  { text: "I hated every minute of training, but I said, don't quit.", author: "Muhammad Ali" },
+  { text: "The only place success comes before work is in the dictionary.", author: "Vince Lombardi" },
+  { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+  { text: "There is no substitute for hard work.", author: "Thomas Edison" },
+  { text: "You miss 100% of the shots you don't take.", author: "Wayne Gretzky" },
+  { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+  { text: "Your work is going to fill a large part of your life.", author: "Steve Jobs" },
+  { text: "Success is not final, failure is not fatal.", author: "Winston Churchill" },
+];
+let quoteIndex = Math.floor(Math.random() * QUOTES.length);
+function renderQuote(){
+  const q = QUOTES[quoteIndex];
+  document.getElementById('quoteText').textContent = q.text;
+  document.getElementById('quoteAuthor').textContent = '— ' + q.author;
+}
+document.getElementById('quoteNext').addEventListener('click', ()=>{
+  quoteIndex = (quoteIndex + 1) % QUOTES.length;
+  renderQuote();
+});
+
+// ---------- Milestones ----------
+function renderMilestones(){
+  const grid = document.getElementById('milestoneGrid');
+  grid.innerHTML = '';
+  const se = sortedEntries();
+  const current = se.length ? se[se.length-1].weight : null;
+
+  let streak = 0, cursor = new Date();
+  while(true){
+    const key = cursor.toISOString().slice(0,10);
+    if(entries.some(en=>en.date===key)){ streak++; cursor.setDate(cursor.getDate()-1); } else break;
+  }
+
+  const lostSoFar = (goal && current !== null) ? goal.start - current : 0;
+
+  const items = [
+    { icon: 'ti-flame', label: '7-day streak', sub: streak + ' days', achieved: streak >= 7 },
+    { icon: 'ti-scale', label: 'Lost 1 kg', sub: fmt(Math.max(0,lostSoFar)) + ' kg so far', achieved: lostSoFar >= 1 },
+    { icon: 'ti-trending-down', label: 'Lost 5 kg', sub: fmt(Math.max(0,lostSoFar)) + ' kg so far', achieved: lostSoFar >= 5 },
+    { icon: 'ti-flag-3', label: 'Reached goal', sub: goal ? displayWeight(goal.target) : 'Set a goal', achieved: goal && current !== null && current <= goal.target },
+  ];
+
+  items.forEach(it=>{
+    const card = document.createElement('div');
+    card.className = 'milestone-card' + (it.achieved ? ' achieved' : '');
+    card.innerHTML = `<div class="milestone-icon"><i class="ti ${it.icon}"></i></div><p class="milestone-label">${it.label}</p><p class="milestone-sub">${it.sub}</p>`;
+    grid.appendChild(card);
+  });
+}
+
 // ---------- Master render ----------
 function renderAll(){
   document.getElementById('todayDate').textContent = new Date().toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
@@ -424,6 +477,8 @@ function renderAll(){
   renderTrendChart(overviewRange);
   renderTrendStats();
   renderGoalSummary();
+  renderQuote();
+  renderMilestones();
 }
 
 renderAll();
