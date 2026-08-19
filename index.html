@@ -91,7 +91,7 @@
               <button class="range-btn" data-range="all">All</button>
             </div>
           </div>
-          <canvas id="trendChart" height="200"></canvas>
+          <div class="chart-wrap"><canvas id="trendChart"></canvas></div>
         </div>
 
         <div class="panel">
@@ -115,6 +115,20 @@
           <div class="entry-list" id="recentEntries"></div>
         </div>
       </div>
+
+      <div class="quote-panel">
+        <span class="quote-mark">&ldquo;</span>
+        <div class="quote-body">
+          <p class="quote-text" id="quoteText">—</p>
+          <p class="quote-author" id="quoteAuthor">—</p>
+        </div>
+        <button class="quote-next" id="quoteNext" aria-label="Next quote"><i class="ti ti-refresh"></i></button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>Milestones</h2></div>
+        <div class="milestone-grid" id="milestoneGrid"></div>
+      </div>
     </section>
 
     <!-- TRENDS -->
@@ -130,7 +144,7 @@
             <button class="range-btn2" data-range2="all">All</button>
           </div>
         </div>
-        <canvas id="bigTrendChart" height="120"></canvas>
+        <div class="chart-wrap-lg"><canvas id="bigTrendChart"></canvas></div>
       </div>
 
       <div class="stat-grid">
