@@ -1,15 +1,16 @@
 :root{
-  --bg: #FAFAF7;
-  --paper: #FFFFFF;
-  --ink: #1F2A24;
-  --ink-soft: #5B6660;
-  --ink-faint: #98A29B;
-  --line: #E4E1D8;
-  --teal: #2F6F5E;
-  --teal-soft: #E4EEE9;
-  --amber: #C97B4A;
-  --amber-soft: #F7E8DD;
-  --danger: #B5493A;
+  --bg: #14181A;
+  --paper: #1D2325;
+  --paper-raised: #232A2C;
+  --ink: #EDEFEC;
+  --ink-soft: #A7B0AB;
+  --ink-faint: #6F7873;
+  --line: #333B3D;
+  --teal: #4FA98C;
+  --teal-soft: #1E3530;
+  --amber: #E0975E;
+  --amber-soft: #3A2C1F;
+  --danger: #E07A6B;
   --radius: 10px;
   --font-display: 'Fraunces', serif;
   --font-body: 'Inter', sans-serif;
@@ -80,7 +81,7 @@ body{
   cursor:pointer;
   margin: 16px 0;
 }
-.log-btn:hover{ background:#265f50; }
+.log-btn:hover{ background:#3d8a70; }
 
 .sidebar-foot{ display:flex; flex-direction:column; gap:6px; }
 .sidebar-foot label{ font-size:12px; color: var(--ink-faint); }
@@ -142,6 +143,8 @@ body{
   padding: 18px 20px;
 }
 .panel-wide{ min-width: 0; }
+.chart-wrap{ position: relative; height: 260px; width: 100%; }
+.chart-wrap-lg{ position: relative; height: 340px; width: 100%; }
 .panel-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 14px; }
 .panel-head h2{ font-family: var(--font-display); font-size: 16px; font-weight: 600; margin:0; }
 
@@ -213,7 +216,7 @@ body{
   font-size: 14px;
   cursor:pointer;
 }
-.primary-btn:hover{ background:#265f50; }
+.primary-btn:hover{ background:#3d8a70; }
 .summary-text{ font-size: 14px; color: var(--ink-soft); margin: 0 0 12px; }
 .error-text{ color: var(--danger); font-size: 12px; min-height: 16px; margin-bottom: 4px; }
 
@@ -233,7 +236,7 @@ body{
 .modal-backdrop{
   display:none;
   position: fixed; inset:0;
-  background: rgba(31,42,36,0.35);
+  background: rgba(0,0,0,0.6);
   align-items:center; justify-content:center;
   z-index: 50;
 }
@@ -248,6 +251,74 @@ body{
 .modal-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; }
 .modal-head h2{ font-family: var(--font-display); font-size: 18px; margin:0; }
 .icon-btn{ background:none; border:none; cursor:pointer; color: var(--ink-faint); font-size: 16px; }
+
+/* Motivation quote panel */
+.quote-panel{
+  background: linear-gradient(135deg, var(--paper-raised), var(--paper));
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 12px;
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.quote-mark{
+  font-family: var(--font-display);
+  font-size: 54px;
+  color: var(--amber);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.quote-body{ flex:1; }
+.quote-text{
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 8px;
+}
+.quote-author{ font-size: 13px; color: var(--ink-faint); }
+.quote-next{
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 16px;
+}
+.quote-next:hover{ border-color: var(--teal); color: var(--teal); }
+
+/* Milestones */
+.milestone-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap: 12px;
+}
+.milestone-card{
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align:center;
+}
+.milestone-card.achieved{ border-color: var(--teal); }
+.milestone-icon{
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--teal-soft);
+  color: var(--ink-faint);
+  display:flex; align-items:center; justify-content:center;
+  font-size: 19px;
+  margin: 0 auto 10px;
+}
+.milestone-card.achieved .milestone-icon{ background: var(--teal); color: #fff; }
+.milestone-label{ font-size: 12px; color: var(--ink-soft); margin: 0 0 2px; }
+.milestone-sub{ font-size: 11px; color: var(--ink-faint); margin:0; }
 
 @media (max-width: 760px){
   .app{ flex-direction: column; }
